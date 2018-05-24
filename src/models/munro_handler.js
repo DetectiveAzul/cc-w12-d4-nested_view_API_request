@@ -10,6 +10,6 @@ MunroHandler.prototype.getData = function() {
   request.get((data) => {
     PubSub.publish('MunroHandler:munro-data', data);
   });
-}
+};
 
 module.exports = MunroHandler;
