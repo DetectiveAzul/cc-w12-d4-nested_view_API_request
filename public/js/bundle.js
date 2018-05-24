@@ -111,7 +111,7 @@ eval("const RequestHelper = function (url) {\n  this.url = url\n}\n\nRequestHelp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst Request = __webpack_require__(/*! ../helpers/request_helper.js */ \"./src/helpers/request_helper.js\");\n\nconst MunroHandler = function() {\n\n};\n\nMunroHandler.prototype.getData = function() {\n  const request = new Request('https://munroapi.herokuapp.com/api/munros');\n  request.get((data) => {\n    PubSub.publish('MunroHandler:munro-data', data);\n    console.log(data);\n  });\n}\n\nmodule.exports = MunroHandler;\n\n\n//# sourceURL=webpack:///./src/models/munro_handler.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst Request = __webpack_require__(/*! ../helpers/request_helper.js */ \"./src/helpers/request_helper.js\");\n\nconst MunroHandler = function() {\n\n};\n\nMunroHandler.prototype.getData = function() {\n  const request = new Request('https://munroapi.herokuapp.com/api/munros');\n  request.get((data) => {\n    PubSub.publish('MunroHandler:munro-data', data);\n  });\n}\n\nmodule.exports = MunroHandler;\n\n\n//# sourceURL=webpack:///./src/models/munro_handler.js?");
 
 /***/ }),
 
@@ -122,7 +122,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function(element) {\n  this.element = element;\n};\n\nListView.prototype.bindEvents = function () {\n  console.log('Listview started to listen');\n  console.log('ListView element:' ,this.element);\n};\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function(element) {\n  this.element = element;\n};\n\nListView.prototype.bindEvents = function () {\n  PubSub.subscribe('MunroHandler:munro-data', (evt) => {\n    this.renderData(evt.detail);\n  });\n};\n\nListView.prototype.renderData = function (data) {\n  console.table(data);\n};\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
 
 /***/ }),
 

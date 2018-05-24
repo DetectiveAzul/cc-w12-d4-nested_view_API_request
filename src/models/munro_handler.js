@@ -9,7 +9,6 @@ MunroHandler.prototype.getData = function() {
   const request = new Request('https://munroapi.herokuapp.com/api/munros');
   request.get((data) => {
     PubSub.publish('MunroHandler:munro-data', data);
-    console.log(data);
   });
 }
 

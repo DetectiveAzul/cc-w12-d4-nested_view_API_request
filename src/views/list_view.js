@@ -5,8 +5,13 @@ const ListView = function(element) {
 };
 
 ListView.prototype.bindEvents = function () {
-  console.log('Listview started to listen');
-  console.log('ListView element:' ,this.element);
+  PubSub.subscribe('MunroHandler:munro-data', (evt) => {
+    this.renderData(evt.detail);
+  });
+};
+
+ListView.prototype.renderData = function (data) {
+  console.table(data);
 };
 
 module.exports = ListView;
