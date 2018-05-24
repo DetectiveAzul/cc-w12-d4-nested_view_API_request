@@ -8,6 +8,10 @@ FilterView.prototype.bindEvents = function () {
   PubSub.subscribe('MunroHandler:munro-data', (evt) => {
     this.populateMenu(evt.detail);
   });
+
+  this.element.addEventListener('change', (event) => {
+    PubSub.publish('FilterView:filter-selected', event.target.value);
+  });
 };
 
 FilterView.prototype.populateMenu = function(data) {
@@ -32,6 +36,8 @@ FilterView.prototype.createOption = function(option) {
   optionToCreate.textContent = option;
   this.element.appendChild(optionToCreate);
 };
+
+
 
 
 

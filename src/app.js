@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   //Find body element
   const body = document.querySelector('body');
 
-  //Create the model and start publishing data
-  const munroHandler = new MunroHandler();
-  munroHandler.getData();
+  //Create the filterview and starts subscribing/publishing data
+  const select = document.querySelector('select');
+  const filterView = new FilterView(select);
+  filterView.bindEvents();
 
   //Create the listview and starts subscribing data
   const listElement = document.createElement('div');
@@ -19,11 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const listView = new ListView(listElement);
   listView.bindEvents();
 
-  //Create the filterview and starts subscribing/publishing data
-  const select = document.querySelector('select');
-  const filterView = new FilterView(select);
-  filterView.bindEvents();
+  //Create the model and start publishing data
+  const munroHandler = new MunroHandler();
+  munroHandler.bindEvents();
 
-
-
-})
+});

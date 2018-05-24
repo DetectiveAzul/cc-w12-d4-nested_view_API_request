@@ -12,6 +12,7 @@ ListView.prototype.bindEvents = function () {
 };
 
 ListView.prototype.renderData = function (data) {
+  this.element.innerHTML = '';
   data.forEach((munro) => {
     const individualMunro = this.createMunroView(munro);
     individualMunro.renderMunro();
