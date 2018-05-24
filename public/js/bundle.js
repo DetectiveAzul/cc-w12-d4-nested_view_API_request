@@ -76,9 +76,64 @@
   !*** ./src/app.js ***!
   \********************/
 /*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const MunroHandler = __webpack_require__(/*! ./models/munro_handler.js */ \"./src/models/munro_handler.js\");\nconst ListView = __webpack_require__(/*! ./views/list_view.js */ \"./src/views/list_view.js\");\nconst MunroView = __webpack_require__(/*! ./views/munro_view.js */ \"./src/views/munro_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.log('JavaScript Loaded');\n\n  //Create the listview data and starts subscribing data\n  const listElement = document.createElement('div');\n  listElement.classList.add('list-container');\n  const listView = new ListView(listElement);\n  listView.bindEvents();\n\n  //Create the model and start publishing data\n  const munroHandler = new MunroHandler();\n  munroHandler.bindEvents();\n})\n\n\n//# sourceURL=webpack:///./src/app.js?");
+
+/***/ }),
+
+/***/ "./src/helpers/pub_sub.js":
+/*!********************************!*\
+  !*** ./src/helpers/pub_sub.js ***!
+  \********************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("document.addEventListener('DOMContentLoaded', () => {\n  console.log('JavaScript Loaded');\n})\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const PubSub = {\n  publish: function (channel, payload) {\n    const event = new CustomEvent(channel, {\n      detail: payload\n    });\n    document.dispatchEvent(event);\n  },\n\n  subscribe: function (channel, callback) {\n    document.addEventListener(channel, callback);\n  }\n};\n\nmodule.exports = PubSub;\n\n\n//# sourceURL=webpack:///./src/helpers/pub_sub.js?");
+
+/***/ }),
+
+/***/ "./src/helpers/request_helper.js":
+/*!***************************************!*\
+  !*** ./src/helpers/request_helper.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const RequestHelper = function (url) {\n  this.url = url\n}\n\nRequestHelper.prototype.get = function (onComplete) {\n  const xhr = new XMLHttpRequest();\n  xhr.open('GET', this.url);\n  xhr.addEventListener('load', function() {\n    if(this.status !== 200){\n      return;\n    }\n    const data = JSON.parse(this.responseText);\n    onComplete(data);\n  });\n  xhr.send();\n};\n\nmodule.exports = RequestHelper;\n\n\n//# sourceURL=webpack:///./src/helpers/request_helper.js?");
+
+/***/ }),
+
+/***/ "./src/models/munro_handler.js":
+/*!*************************************!*\
+  !*** ./src/models/munro_handler.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst Request = __webpack_require__(/*! ../helpers/request_helper.js */ \"./src/helpers/request_helper.js\");\n\nconst MunroHandler = function() {\n\n};\n\nMunroHandler.prototype.bindEvents = function () {\n\n};\n\nmodule.exports = MunroHandler; \n\n\n//# sourceURL=webpack:///./src/models/munro_handler.js?");
+
+/***/ }),
+
+/***/ "./src/views/list_view.js":
+/*!********************************!*\
+  !*** ./src/views/list_view.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function(element) {\n  this.element = element;\n};\n\nListView.prototype.bindEvents = function () {\n  console.log('Listview started to listen');\n  console.log('ListView element:' ,this.element);\n};\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
+
+/***/ }),
+
+/***/ "./src/views/munro_view.js":
+/*!*********************************!*\
+  !*** ./src/views/munro_view.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("\n\n//# sourceURL=webpack:///./src/views/munro_view.js?");
 
 /***/ })
 
