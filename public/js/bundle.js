@@ -78,7 +78,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const MunroHandler = __webpack_require__(/*! ./models/munro_handler.js */ \"./src/models/munro_handler.js\");\nconst ListView = __webpack_require__(/*! ./views/list_view.js */ \"./src/views/list_view.js\");\nconst MunroView = __webpack_require__(/*! ./views/munro_view.js */ \"./src/views/munro_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.log('JavaScript Loaded');\n\n  //Create the listview data and starts subscribing data\n  const listElement = document.createElement('div');\n  listElement.classList.add('list-container');\n  const listView = new ListView(listElement);\n  listView.bindEvents();\n\n  //Create the model and start publishing data\n  const munroHandler = new MunroHandler();\n  munroHandler.bindEvents();\n})\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const MunroHandler = __webpack_require__(/*! ./models/munro_handler.js */ \"./src/models/munro_handler.js\");\nconst ListView = __webpack_require__(/*! ./views/list_view.js */ \"./src/views/list_view.js\");\nconst MunroView = __webpack_require__(/*! ./views/munro_view.js */ \"./src/views/munro_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.log('JavaScript Loaded');\n\n  //Create the listview data and starts subscribing data\n  const listElement = document.createElement('div');\n  listElement.classList.add('list-container');\n  const listView = new ListView(listElement);\n  listView.bindEvents();\n\n  //Create the model and start publishing data\n  const munroHandler = new MunroHandler();\n  munroHandler.getData();\n})\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -111,7 +111,7 @@ eval("const RequestHelper = function (url) {\n  this.url = url\n}\n\nRequestHelp
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst Request = __webpack_require__(/*! ../helpers/request_helper.js */ \"./src/helpers/request_helper.js\");\n\nconst MunroHandler = function() {\n\n};\n\nMunroHandler.prototype.bindEvents = function () {\n\n};\n\nmodule.exports = MunroHandler; \n\n\n//# sourceURL=webpack:///./src/models/munro_handler.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst Request = __webpack_require__(/*! ../helpers/request_helper.js */ \"./src/helpers/request_helper.js\");\n\nconst MunroHandler = function() {\n\n};\n\nMunroHandler.prototype.getData = function() {\n  const request = new Request('https://munroapi.herokuapp.com/api/munros');\n  request.get((data) => {\n    PubSub.publish('MunroHandler:munro-data', data);\n    console.log(data);\n  });\n}\n\nmodule.exports = MunroHandler;\n\n\n//# sourceURL=webpack:///./src/models/munro_handler.js?");
 
 /***/ }),
 

@@ -5,8 +5,12 @@ const MunroHandler = function() {
 
 };
 
-MunroHandler.prototype.bindEvents = function () {
+MunroHandler.prototype.getData = function() {
+  const request = new Request('https://munroapi.herokuapp.com/api/munros');
+  request.get((data) => {
+    PubSub.publish('MunroHandler:munro-data', data);
+    console.log(data);
+  });
+}
 
-};
-
-module.exports = MunroHandler; 
+module.exports = MunroHandler;

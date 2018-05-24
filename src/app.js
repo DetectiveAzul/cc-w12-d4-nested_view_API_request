@@ -13,5 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //Create the model and start publishing data
   const munroHandler = new MunroHandler();
-  munroHandler.bindEvents();
+  munroHandler.getData();
 })
