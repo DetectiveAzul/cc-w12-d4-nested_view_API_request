@@ -2,11 +2,12 @@ const PubSub = require('../helpers/pub_sub.js');
 
 const FilterView = function(element) {
   this.element = element;
+  this.menuPopulated = false;
 };
 
 FilterView.prototype.bindEvents = function () {
   PubSub.subscribe('MunroHandler:munro-data', (evt) => {
-    this.populateMenu(evt.detail);
+    if (!this.menuPopulated) this.populateMenu(evt.detail);
   });
 
   this.element.addEventListener('change', (event) => {
@@ -19,6 +20,7 @@ FilterView.prototype.populateMenu = function(data) {
   filteredArray.forEach( (option) => {
     this.createOption(option);
   });
+  this.menuPopulated = true;
 }
 
 FilterView.prototype.getOptions = function (data) {
