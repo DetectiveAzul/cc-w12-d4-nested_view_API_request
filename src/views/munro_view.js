@@ -6,17 +6,27 @@ const MunroView = function(munro, element) {
 };
 
 MunroView.prototype.renderMunro = function () {
-  const title = document.createElement('h2');
-  title.textContent = this.munro.name;
-  const data = document.createElement('ul');
-  const meaning = document.createElement('li');
-  meaning.textContent = `Meaning: ${this.munro.meaning}`;
-  const height = document.createElement('li');
-  height.textContent = `Height: ${this.munro.height}`;
-  this.element.appendChild(title);
-  this.element.appendChild(data);
-  data.appendChild(meaning);
-  data.appendChild(height);
+
+  const title = this.createHtmlElement('h2', this.munro.name );
+  const data = this.createHtmlElement('ul');
+  const height = this.createHtmlElement('li', `Height: ${this.munro.height}`);
+  const meaning = this.createHtmlElement('li', `Meaning: ${this.munro.meaning}`);
+
+  this.addChilds(this.element, [title, data]);
+  this.addChilds(data, [height, meaning]);
+
+};
+
+MunroView.prototype.createHtmlElement = function (type, content) {
+  const element = document.createElement(type);
+  element.textContent = content;
+  return element;
+};
+
+MunroView.prototype.addChilds = function (parent, childs) {
+  childs.forEach( (child) => {
+    parent.appendChild(child);
+  });
 };
 
 module.exports = MunroView;
