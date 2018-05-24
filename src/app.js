@@ -4,10 +4,13 @@ const MunroView = require('./views/munro_view.js');
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('JavaScript Loaded');
+  //Find body element
+  const body = document.querySelector('body');
 
   //Create the listview data and starts subscribing data
   const listElement = document.createElement('div');
   listElement.classList.add('list-container');
+  body.appendChild(listElement);
   const listView = new ListView(listElement);
   listView.bindEvents();
 

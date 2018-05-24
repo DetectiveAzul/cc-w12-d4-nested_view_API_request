@@ -78,7 +78,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const MunroHandler = __webpack_require__(/*! ./models/munro_handler.js */ \"./src/models/munro_handler.js\");\nconst ListView = __webpack_require__(/*! ./views/list_view.js */ \"./src/views/list_view.js\");\nconst MunroView = __webpack_require__(/*! ./views/munro_view.js */ \"./src/views/munro_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.log('JavaScript Loaded');\n\n  //Create the listview data and starts subscribing data\n  const listElement = document.createElement('div');\n  listElement.classList.add('list-container');\n  const listView = new ListView(listElement);\n  listView.bindEvents();\n\n  //Create the model and start publishing data\n  const munroHandler = new MunroHandler();\n  munroHandler.getData();\n})\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const MunroHandler = __webpack_require__(/*! ./models/munro_handler.js */ \"./src/models/munro_handler.js\");\nconst ListView = __webpack_require__(/*! ./views/list_view.js */ \"./src/views/list_view.js\");\nconst MunroView = __webpack_require__(/*! ./views/munro_view.js */ \"./src/views/munro_view.js\");\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  console.log('JavaScript Loaded');\n  //Find body element\n  const body = document.querySelector('body');\n\n  //Create the listview data and starts subscribing data\n  const listElement = document.createElement('div');\n  listElement.classList.add('list-container');\n  body.appendChild(listElement);\n  const listView = new ListView(listElement);\n  listView.bindEvents();\n\n  //Create the model and start publishing data\n  const munroHandler = new MunroHandler();\n  munroHandler.getData();\n})\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -122,7 +122,7 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst ListView = function(element) {\n  this.element = element;\n};\n\nListView.prototype.bindEvents = function () {\n  PubSub.subscribe('MunroHandler:munro-data', (evt) => {\n    this.renderData(evt.detail);\n  });\n};\n\nListView.prototype.renderData = function (data) {\n  console.table(data);\n};\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst MunroView = __webpack_require__(/*! ./munro_view.js */ \"./src/views/munro_view.js\");\n\nconst ListView = function(element) {\n  this.element = element;\n};\n\nListView.prototype.bindEvents = function () {\n  PubSub.subscribe('MunroHandler:munro-data', (evt) => {\n    this.renderData(evt.detail);\n  });\n};\n\nListView.prototype.renderData = function (data) {\n  data.forEach((munro) => {\n    const individualMunro = this.createMunroView(munro);\n    individualMunro.renderMunro();\n  });\n};\n\nListView.prototype.createMunroView = function(munro) {\n  const item = this.addNewMunroChild();\n  const munroView = new MunroView(munro, item);\n  return munroView;\n};\n\nListView.prototype.addNewMunroChild = function () {\n  const item = document.createElement('div');\n  item.classList.add('munro');\n  this.element.appendChild(item);\n  return item;\n};\n\nmodule.exports = ListView;\n\n\n//# sourceURL=webpack:///./src/views/list_view.js?");
 
 /***/ }),
 
@@ -131,9 +131,9 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
   !*** ./src/views/munro_view.js ***!
   \*********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/views/munro_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst MunroView = function(munro, element) {\n  this.munro = munro;\n  this.element = element;\n};\n\nMunroView.prototype.renderMunro = function () {\n  const title = document.createElement('h2');\n  title.textContent = this.munro.name;\n  const data = document.createElement('ul');\n  const meaning = document.createElement('li');\n  meaning.textContent = `Meaning: ${this.munro.meaning}`;\n  const height = document.createElement('li');\n  height.textContent = `Height: ${this.munro.height}`;\n  this.element.appendChild(title);\n  this.element.appendChild(data);\n  data.appendChild(meaning);\n  data.appendChild(height);\n};\n\nmodule.exports = MunroView;\n\n\n//# sourceURL=webpack:///./src/views/munro_view.js?");
 
 /***/ })
 
